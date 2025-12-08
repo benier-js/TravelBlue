@@ -151,38 +151,169 @@ body {
 .main-section-button:active {
   transform: scale(0.9);
 }
+:root{
+    --bg: #f6f8f9;
+    --card-bg: #ffffff;
+    --primary: #0b3b5a;
+    --muted: #55606a;
+    --radius: 12px;
+    --gap: 20px;
+  }
+
+  /* Structure générale */
+  .proof-section {
+    box-sizing: border-box;
+    padding: 48px 20px;
+    background: var(--bg);
+    height: 100vh;
+  }
+
+  .proof-section-container-layout{
+    max-width: 1100px;
+    height: 100%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 5rem;
+    align-items: center;
+  }
+
+  .proof-section-header {
+    text-align: center;
+    max-width: 800px;
+  }
+
+  .proof-section-header h2 {
+    margin: 0 0 8px;
+    font-size: 2rem;
+    color: var(--primary);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+
+  .proof-section-header p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 1rem;
+  }
+
+  /* Cards grid */
+  .proof-section-container-card{
+    width:100%;
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:var(--gap);
+    align-items:stretch;
+  }
+
+  /* Hover subtil sur desktop */
+  @media (hover: hover) and (pointer: fine) {
+    .proof-card:hover{
+      transform:translateY(-6px);
+      box-shadow:0 18px 40px rgba(10,30,50,0.12);
+    }
+  }
+
+  .proof-card img{
+    width:100%;
+    height:150px;
+    object-fit:cover;
+    border-radius:8px;
+    margin: 0 0 8px 0;
+    flex:0 0 auto;
+  }
+
+  /* Title row: texte à gauche, icône à droite */
+  .proof-card-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: .5rem;
+    width: 90%;
+    margin-right: 10%;
+  }
+
+  .proof-card-title h3{
+    margin:0;
+    color:var(--primary);
+    font-size:1.05rem;
+    font-weight:700;
+    line-height:1.2;
+    /* allow long titles to wrap but keep icon to the right */
+    overflow-wrap: anywhere;
+  }
+
+  /* Icon: ensure visible color and size */
+  .proof-icon {
+    width: 22px;
+    height: 22px;
+    flex-shrink: 0;
+    display: block;
+    fill: #047883; /* important : force la couleur du path */
+  }
+
+  .proof-card p{
+    margin:0;
+    color:var(--muted);
+    font-size:0.95rem;
+    line-height:1.45;
+  }
+
+  /* Responsive */
+  @media (max-width:980px){
+    .proof-section-container-card{ grid-template-columns:repeat(2,1fr); }
+    .proof-card{ aspect-ratio:3 / 4; min-height:300px; }
+  }
+
+  @media (max-width:600px){
+    .proof-section-container-card{ grid-template-columns:1fr; }
+    .proof-card{ aspect-ratio:auto; min-height:200px; padding:14px; }
+    .proof-section-header h2{ font-size:1.5rem; }
+  }
+
+  /* Focus accessible */
+  .proof-card:focus-within { outline: 3px solid rgba(11,59,90,0.06); outline-offset: 4px; }
+
+.proof-card {
+    border-radius: var(--radius);
+    padding: 16px;
+    display:flex;
+    flex-direction:column;
+    overflow:hidden;
+    aspect-ratio:1 / 1; /* carré - remplace ton 5/5 */
+    gap: 1.4rem;
+    border-radius: 12px;
+    transition: box-shadow 0.3s ease, border-color 0.3s ease, transform 0.3s ease; /* border-color, pas border */
+    overflow: hidden;
+}
+
+/* Hover */
+.proof-card:hover {
+    border-color: #047883; /* juste la couleur change */
+    box-shadow: 0 0 15px rgba(4, 120, 131, 0.35);
+}
+
 
 .proof-section {
+    position: relative; /* important pour le absolute de la vague */
+    box-sizing: border-box;
+    padding: 48px 20px; 
+    background:#f6f8f9; 
+    overflow: hidden; /* pour éviter le débordement de la vague */
+}
+
+.wave-svg {
+    background-color: #047883;
+    fill: #f6f8f9;
+}
+
+.proof-wave {
+    position: absolute;
+    bottom: 0;
+    left: 0;
     width: 100%;
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.proof-section-container-layout {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    color: black;
-}
-
-.proof-section-container-text {
-    text-align: center;
-}
-
-.proof-section-container-card {
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-}
-
-.proof-section-card {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-around;
+    height: 100px; /* ajuster selon la hauteur souhaitée */
+    background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 1440 320" xmlns="http://www.w3.org/2000/svg"><path fill="%23ffffff" fill-opacity="1" d="M0,160L48,165.3C96,171,192,181,288,192C384,203,480,213,576,202.7C672,192,768,160,864,144C960,128,1056,128,1152,138.7C1248,149,1344,171,1392,181.3L1440,192L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"></path></svg>') no-repeat top center;
+    background-size: cover;
+    z-index: 1;
 }
